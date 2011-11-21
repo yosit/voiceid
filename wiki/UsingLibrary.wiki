@@ -7,8 +7,10 @@ Using the library in Python scripts:
 {{{
 from voiceid import Voiceid, GMMVoiceDB
 
-#create voice db
-db = GMMVoiceDB('.')
+#create voice db 
+#ensure the directory you choose have 3 subdir M, F, U
+#you can make the dirs by typing in shell 'mkdir -p mydir/{M,F,U}'
+db = GMMVoiceDB('mydir')
 
 #add models to db: params the basename of 'myfile.wav' and the speaker, Giovanni
 db.add_model('myfile', 'Giovanni')
