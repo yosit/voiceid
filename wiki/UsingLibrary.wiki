@@ -1,0 +1,28 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= Introduction =
+
+Using the library in Python scripts:
+{{{
+from voiceid import Voiceid, GMMVoiceDB
+
+#create voice db
+db = GMMVoiceDB('.')
+
+#add models to db: params the basename of 'myfile.wav' and the speaker, Giovanni
+db.add_model('myfile', 'Giovanni')
+
+
+#process a video/audio file containing various speakers
+v = Voiceid(db, 'myfile.mp4')
+
+#extract the speakers from file and search into db 
+v.extract_speakers()
+
+#print the clusters (one for every speaker) and relative speakers' names
+for c in v.get_clusters():
+    print v.get_cluster(c)
+
+}}}
+
