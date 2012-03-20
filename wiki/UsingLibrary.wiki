@@ -12,8 +12,6 @@ from voiceid.db import GMMVoiceDB
 #   create voice db   
 #
 
-#ensure the directory you choose have 3 subdir M, F, U
-#you can make the dirs by typing in shell 'mkdir -p mydir/{M,F,U}'
 db = GMMVoiceDB('mydir')
 
 #add models to db: params the basename of 'giov_wave.wav' and the speaker, Giovanni
