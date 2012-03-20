@@ -5,7 +5,8 @@
 
 Using the library in Python scripts:
 {{{
-from voiceid import Voiceid, GMMVoiceDB
+from voiceid.sr import Voiceid
+from voiceid.db import GMMVoiceDB
 
 #
 #   create voice db   
