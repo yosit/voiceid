@@ -1,0 +1,383 @@
+=API documentation=
+
+=voiceid — Voice diarization and identification module=
+
+VoiceID is a speaker recognition/identification system written in Python, based on the LIUM Speaker Diarization (http://lium3.univ-lemans.fr/diarization/doku.php) framework.
+VoiceID can process video or audio files to identify in which slices of time there is a person speaking (diarization); then it examines all those segments to identify who is speaking. To do so
+uses a voice models database.
+To create the database you have to do a “train phase”, in interactive mode, by assigning a label to the “unknown” speakers. You can also build yourself manually the speaker models and put in the
+db using the scripts to create the gmm files.
+=voiceid.db — Voice model database classes=
+
+_class _ `voiceid.db.`*GMMVoiceDB*(_path_, _thrd_n=1_)
+    A Gaussian Mixture Model voices database.
+        _path_ (string) – the voice db path  
+
+
+    ` ` *add_model*(_basefilename_, _identifier_, _gender=None_)
+        Add a gmm model to db.
+                *   _basefilename_ (string) – the wave file basename and path       
+                *   _identifier_ (string) – the speaker in the wave                 
+                *   _gender_ (char F, M or U) – the gender of the speaker (optional)
+
+
+    ` ` *get_speakers*()
+        Return a dictionary where the keys are the genders and the values are a list of the available speakers models for every gender.
+    ` ` *match_voice*(_mfcc_file_, _identifier_, _gender_)
+        Match the voice (mfcc file) versus the gmm model of ‘identifier’ in db.
+                *   _mfcc_file_ (string) – the feature(mfcc) file extracted from the wave
+                *   _identifier_ (string) – the speaker in the wave                      
+                *   _gender_ (char F, M or U) – the gender of the speaker (optional)     
+
+
+    ` ` *remove_model*(_mfcc_file_, _identifier_, _score_, _gender_)
+        Remove a voice model from the db.
+                *   _mfcc_file_ (string) – the mfcc file name and path              
+                *   _identifier_ (string) – the speaker in the wave                 
+                *   _score_ (float) – the value of                                  
+                *   _gender_ (char F, M or U) – the gender of the speaker (optional)
+
+
+    ` ` *set_maxthreads*(_t_)
+        Set the max number of threads running together for the lookup task.
+                _t_ (integer) – max number of threads allowed to run at the same time.  
+
+
+    ` ` *voice_lookup*(_mfcc_file_, _gender_)
+        Look for the best matching speaker in the db for the given features file.
+                            *   _mfcc_file_ (string) – the feature(mfcc) file extracted from the wave
+                            *   _gender_ (char F, M or U) – the speaker gender                       
+
+                            Return type:        dictionary                                                               
+
+                                    Returns:            a dictionary having a computed score for every voice model in the db     
+
+
+_class _ `voiceid.db.`*VoiceDB*(_path_)
+    A class that represent a generic voice models db.
+        _path_ (string) – the voice db path  
+
+
+    ` ` *add_model*(_basefilename_, _identifier_, _gender=None_)
+        Add a voice model to the database.
+                *   _basefilename_ (string) – basename including absolulute path of the voice file                                      
+                *   _identifier_ (string) – name or label of the speaker voice in the model, in a single word without special characters
+                *   _gender_ (char F, M or U) – the gender of the speaker in the model                                                  
+
+
+    ` ` *get_path*()
+        Get the base path of the voice models db, where are stored the voice model files, splitted in 3 directories according to the gender (F, M, U).
+                            Return type:        string                  
+
+                                    Returns:            the path of the voice db
+
+
+    ` ` *get_speakers*()
+        Return a dictionary where the keys are the genders and the values are a list for every gender with the available speakers models.
+    ` ` *match_voice*(_mfcc_file_, _identifier_, _gender_)
+        Match the given feature file vs the specified speaker model.
+                *   _mfcc_file_ (string) – the feature(mfcc) file extracted from the wave
+                *   _identifier_ (string) – the name or label of the speaker             
+                *   _gender_ (char F, M or U) – the speaker gender                       
+
+
+    ` ` *remove_model*(_mfcc_file_, _identifier_, _score_, _gender_)
+        Remove a speaker model from the database according to the score it gets by matching vs the given feature file
+                *   _mfcc_file_ (string) – the feature(mfcc) file extracted from the wave
+                *   _identifier_ (string) – the name or label of the speaker             
+                *   _score_ (float) – the score obtained in the voice matching           
+                *   _gender_ (char F, M or U) – the speaker gender                       
+
+
+    ` ` *voice_lookup*(_mfcc_file_, _gender_)
+        Look for the best matching speaker in the db for the given features file.
+                *   _mfcc_file_ (string) – the feature(mfcc) file extracted from the wave
+                *   _gender_ (char F, M or U) – the speaker gender                       
+
+
+=voiceid.sr — Speaker recognition classes=
+
+_class _ `voiceid.sr.`*Cluster*(_identifier_, _gender_, _frames_, _dirname_)
+    A Cluster object, representing a computed cluster for a single speaker, with gender, a number of frames and environment.
+        *   _identifier_ (string) – the cluster identifier                   
+        *   _gender_ (char F, M or U) – the gender of the cluster            
+        *   _frames_ (integer) – total frames of the cluster                 
+        *   _dirname_ (string) – the directory where is the cluster wave file
+
+
+    ` ` *add_speaker*(_identifier_, _score_)
+        Add a speaker with a computed score for the cluster, if a better score is already present the new score will be ignored.
+                *   _identifier_ (string) – the speaker identifier                             
+                *   _score_ (float) – score computed between the cluster wave and speaker model
+
+
+    ` ` *generate_seg_file*(_filename_)
+        Generate a segmentation file for the cluster.
+                _filename_ (string) – the name of the seg file  
+
+
+    ` ` *get_best_five*()
+        Get the best five speakers in the db for the cluster.
+                            Return type:        array of tuple                                        
+
+                                    Returns:            an array of five most probable speakers represented by
+
+
+        ordered tuples of the form (speaker, score) ordered by score.
+    ` ` *get_best_speaker*()
+        Get the best speaker for the cluster according to the scores. If the speaker’s score is lower than a fixed threshold or is too close to the second best matching voice, then it is set as
+        “unknown”.
+                            Return type:        string                                   
+
+                                    Returns:            the best speaker matching the cluster wav
+
+
+    ` ` *get_distance*()
+        Get the distance between the best speaker score and the closest speaker score.
+    ` ` *get_gender*()
+        Get the computed gender of the Cluster.
+                            Return type:        char                     
+
+                                    Returns:            the gender of the cluster
+
+
+    ` ` *get_m_distance*()
+        Get the distance between the best speaker score and the mean of all the speakers’ scores.
+    ` ` *get_mean*()
+        Get the mean of all the scores of all the tested speakers for the cluster.
+    ` ` *get_name*()
+        Get the cluster name assigned by the diarization process.
+    ` ` *get_speaker*()
+        Set the right speaker for the cluster if not set and returns its name.
+    ` ` *merge*(_other_)
+        Merge the Cluster with another.
+                _other_ (Cluster) – the cluster to be merged with  
+
+
+    ` ` *merge_waves*(_dirname_)
+        Take all the wave of a cluster and build a single wave.
+                _dirname_ (string) – the output dirname  
+
+
+    ` ` *print_segments*()
+        Print cluster timing.
+    ` ` *rename*(_identifier_)
+        Rename the cluster and all the relative segments.
+                _identifier_ (string) – the new name of the cluster  
+
+
+    ` ` *set_speaker*(_identifier_)
+        Set the cluster speaker identifier ‘by hand’.
+                _identifier_ (string) – the speaker name or identifier  
+
+
+    ` ` *to_dict*()
+        A dictionary representation of a Cluster.
+_class _ `voiceid.sr.`*Segment*(_line_)
+    A Segment taken from a segmentation file, representing the smallest recognized
+        voice time slice.
+        _line_ (string) – the line taken from a seg file  
+
+
+    ` ` *get_basename*()
+        Get the basename of the original file which belong the segment.
+    ` ` *get_duration*()
+        Get the duration of the segment in frames.
+    ` ` *get_end*()
+        Get the end frame index of the segment.
+    ` ` *get_environment*()
+        Get the environment of the segment.
+    ` ` *get_gender*()
+        Get the gender of the segment.
+    ` ` *get_line*()
+        Get the line of the segment in the original seg file.
+    ` ` *get_speaker*()
+        Get the speaker identifier of the segment.
+    ` ` *get_start*()
+        Get the start frame index of the segment.
+    ` ` *rename*(_identifier_)
+        Change the identifier of the segment.
+                _identifier_ (string) – the identifier of the speaker in the segment  
+
+
+_class _ `voiceid.sr.`*Voiceid*(_db_, _filename_, _single=False_)
+    The main object that represents the file audio/video to manage.
+        *   _db_ (object) – the VoiceDB database instance                                                                                             
+        *   _filename_ (string) – the wave or video file to be processed                                                                              
+        *   _single_ (boolean) – set to True to force to avoid diarization (a faster approach) only in case you have just a single speaker in the file
+
+
+    ` ` *add_update_cluster*(_identifier_, _cluster_)
+        Add a cluster or update an existing cluster.
+                *   _identifier_ (string) – the cluster identifier (i.e. S0, S12, S44...)
+                *   _cluster_ (object) – a Cluster object                                
+
+
+    ` ` *diarization*()
+        Run the diarization process. In case of single mode (single speaker in the input file) just create the seg file with silence and gender detection.
+    ` ` *extract_speakers*(_interactive=False_, _quiet=False_, _thrd_n=1_)
+        Identify the speakers in the audio wav according to a speakers database. If a speaker doesn’t match any speaker in the database then sets it as unknown. In interactive mode it asks the
+        user to set speakers’ names.
+                *   _interactive_ (boolean) – if True the user must interact to give feedback or train the computed clusters voices
+                *   _quiet_ (boolean) – silent mode, no prints in batch mode                                                       
+                *   _thrd_n_ (integer) – max number of concurrent threads for voice db matching                                    
+
+
+    ` ` *generate_seg_file*()
+        Generate a seg file according to the information acquired about the speech clustering
+    ` ` *get_cluster*(_identifier_)
+        Get a the cluster by a given identifier.
+                _identifier_ (string) – the cluster identifier (i.e. S0, S12, S44...)  
+
+
+    ` ` *get_clusters*()
+        Get the clusters recognized in the processed file.
+    ` ` *get_db*()
+        Get the VoiceDB instance used.
+    ` ` *get_file_basename*()
+        Get the basename of the current working file.
+    ` ` *get_file_extension*()
+        Get the extension of the current working file.
+    ` ` *get_filename*()
+        Get the name of the current working file.
+    ` ` *get_speakers_map*()
+        A dictionary map between speaker label and speaker name.
+    ` ` *get_status*()
+        Get the status of the computation. 0:’file_loaded’, 1:’file_converted’, 2:’diarization_done’, 3:’trim_done’, 4:’mfcc extracted’, 5:’speakers matched’
+    ` ` *get_time_slices*()
+        Return the time slices with all the information about start time, duration, speaker name or “unknown”, gender and sound quality (studio/phone).
+    ` ` *get_working_status*()
+        Get a string representation of the working status.
+            0:’converting_file’, 1:’diarization’, 2:’trimming’, 3:’mfcc extraction’, 4:’voice matching’, 5:’extraction finished’
+    ` ` *remove_cluster*(_identifier_)
+        Remove and delete a cluster.
+                _identifier_ (string) – the cluster identifier (i.e. S0, S12, S44...)  
+
+
+    ` ` *to_XMP_string*()
+        Return the Adobe XMP representation of the information about who is speaking and when. The tags used are Tracks and Markers, the ones used by Adobe Premiere for speech-to-text
+        information.
+    ` ` *to_dict*()
+        Return a JSON representation for the clustering information.
+    ` ` *update_db*(_t_num=4_)
+        Update voice db after some changes, for example after a train session.
+                _t_num_ (integer) – number of contemporary threads processing the update_db  
+
+
+    ` ` *write_json*(_dictionary=None_)
+        Write to file the json dictionary representation of the Clusters.
+    ` ` *write_output*(_mode_)
+        Write to file (basename.extension, for example: myfile.srt) the output of the recognition process.
+                _mode_ (string) – the output format: srt, json or xmp  
+
+
+`voiceid.sr.`*extract_clusters*(_segfilename_, _clusters_)
+    Read _clusters from segmentation file.
+`voiceid.sr.`*manage_ident*(_filebasename_, _gmm_, _clusters_)
+    Take all the files created by the call of mfcc_vs_gmm() on the whole speakers db and put all the results in a bidimensional dictionary.
+=voiceid.fm — Low level Wave and Gmm files manipulation=
+
+`voiceid.fm.`*build_gmm*(_filebasename_, _identifier_)
+    Build a gmm (Gaussian Mixture Model) file from a given wave with a speaker identifier associated.
+        *   _filebasename_ (string) – the input file basename            
+        *   _identifier_ (string) – the name or identifier of the speaker
+
+
+`voiceid.fm.`*diarization*(_filebasename_)
+    Take a wave file in the correct format and build a segmentation file. The seg file shows how much speakers are in the audio and when they talk.
+        _filebasename_ (string) – the basename of the wav file to process  
+
+
+`voiceid.fm.`*extract_mfcc*(_filebasename_)
+    Extract audio features from the wave file, in particular the mel-frequency cepstrum using a sphinx tool.
+`voiceid.fm.`*file2trim*(_filename_)
+    Take a video or audio file and converts it into smaller waves according to the diarization process.
+        _filename_ (string) – the input file audio/video  
+
+
+`voiceid.fm.`*file2wav*(_filename_)
+    Take any kind of video or audio and convert it to a “RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz” wave file using gstreamer. If you call it passing a wave it
+    checks if in good format, else it converts the wave in the good format.
+        _filename_ (string) – the input audio/video file to convert  
+
+
+`voiceid.fm.`*get_gender*(_input_file_)
+    Return gender of a given gmm file.
+        _input_file_ (string) – the gmm file  
+
+
+`voiceid.fm.`*ident_seg*(_filebasename_, _identifier_)
+    Substitute cluster names with speaker names ang generate a “<filebasename>.ident.seg” file.
+`voiceid.fm.`*ident_seg_rename*(_filebasename_, _identifier_, _outputname_)
+    Take a seg file and substitute the clusters with a given name or identifier.
+`voiceid.fm.`*merge_gmms*(_input_files_, _output_file_)
+    Merge two or more gmm files to a single gmm file with more voice models.
+        *   _input_files_ (list) – the gmm file list to merge  
+        *   _output_file_ (string) – the merged gmm output file
+
+
+`voiceid.fm.`*merge_waves*(_input_waves_, _wavename_)
+    Take a list of waves and append them to a brend new destination wave.
+        *   _input_waves_ (list) – the wave files list                
+        *   _wavename_ (string) – the output wave file to be generated
+
+
+`voiceid.fm.`*mfcc_vs_gmm*(_filebasename_, _gmm_, _gender_, _custom_db_dir=None_)
+    Match a mfcc file and a given gmm model file and produce a segmentation file containing the score obtained.
+        *   _filebasename_ (string) – the basename of the mfcc file to process  
+        *   _gmm_ (string) – the path of the gmm file containing the voice model
+        *   _gender_ (char) – F, M or U, the gender of the voice model          
+        *   _custom_db_dir_ (None or string) – the voice models database to use 
+
+
+`voiceid.fm.`*rename_gmm*(_input_file_, _identifier_)
+    Rename a gmm with a new speaker identifier(name) associated.
+        *   _input_file_ (string) – the gmm file to rename                     
+        *   _identifier_ (string) – the new name or identifier of the gmm model
+
+
+`voiceid.fm.`*seg2srt*(_segfile_)
+    Take a seg file and convert it in a subtitle file (srt).
+        _segfile_ (string) – the segmentation file to convert  
+
+
+`voiceid.fm.`*seg2trim*(_filebasename_)
+    Take a wave and splits it in small waves in this directory structure <file base name>/<cluster>/<cluster>_<start time>.wav
+        _filebasename_ (string) – filebasename of the seg and wav input files  
+
+
+`voiceid.fm.`*split_gmm*(_input_file_, _output_dir=None_)
+    Split a gmm file into gmm files with a single voice model.
+        *   _input_file_ (string) – the gmm file containing various voice models      
+        *   _output_dir_ (string) – the directory where is splitted the gmm input file
+
+
+`voiceid.fm.`*srt2subnames*(_filebasename_, _key_value_)
+    Substitute cluster names with real names in subtitles.
+`voiceid.fm.`*wave_duration*(_wavfile_)
+    Extract the duration of a wave file in sec.
+        _wavfile_ (string) – the wave input file  
+
+
+=voiceid.utils — Utilities=
+
+`voiceid.utils.`*alive_threads*(_t_)
+    Check how much threads are running and alive in a thread dictionary
+        _t_ (dictionary) – thread dictionary like { key : thread_obj, ... }  
+
+
+`voiceid.utils.`*check_deps*()
+    Check for dependencies.
+`voiceid.utils.`*ensure_file_exists*(_filename_)
+    Ensure file exists and is not empty, otherwise raise an IOError.
+        _filename_ (string) – file to check  
+
+
+`voiceid.utils.`*humanize_time*(_secs_)
+    Convert seconds into time format.
+        _secs_ (integer) – the time in seconds to represent in human readable format (hh:mm:ss)  
+
+
+`voiceid.utils.`*start_subprocess*(_commandline_)
+    Start a subprocess using the given commandline and check for correct termination.
+        _commandline_ (string) – the command to run in a subprocess  
