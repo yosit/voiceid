@@ -24,7 +24,7 @@ The core of Voiceid ([http://lium3.univ-lemans.fr/diarization/doku.php/welcome L
 Voiceid takes in input WAVE or video files that can be read by GStreamer. It convert the audio track with these specs "RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz".
 
 == What Voiceid return in output? ==
-The format of the output file can be: srt, json or [http://www.adobe.com/products/xmp/XMP]. Each of these contains the time intervals in which each speaker speaks into the video. Srt ([http://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format SubRip]) is a file format used generally for the subtitles video.
+The format of the output file can be: srt, json or [http://www.adobe.com/products/xmp/ XMP]. Each of these contains the time intervals in which each speaker speaks into the video. Srt ([http://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format SubRip]) is a file format used generally for the subtitles video.
 
 == Does Voiceid work in real time? ==
 No, it doesn't work in real time.
