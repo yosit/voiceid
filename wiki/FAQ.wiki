@@ -31,3 +31,6 @@ No, it doesn't work in real time.
 
 == Can Voiceid be used from a GUI interface?=
 Yes, there is a GUI interface named _voiceidplayer_ that shows all progress and results in a simple window.
+
+==What kind of video file can be accepted in voiceidplayer gui?==
+The video formats accepted are those of [http://www.mplayerhq.hu/design7/info.html mplayer].
