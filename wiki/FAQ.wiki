@@ -28,3 +28,6 @@ The format of the output file can be: srt, json or [http://www.adobe.com/product
 
 == Does Voiceid work in real time? ==
 No, it doesn't work in real time.
+
+== Can Voiceid be used from a GUI interface?
+Yes, there is a GUI interface named voiceidplayer that show all progress and result in a simple window.
