@@ -22,7 +22,6 @@
   The core of Voiceid (LIUM SpkrDiarization lib) is written in Java, and at the beginning Voiceid was a set of shell scripts running LIUM tasks.
 We switch to Python when it become more complex. We are planning to switch to Java in order to simplify the access to LIUM routins and for better performances.
 
-== Does Voiceid work in real time?
+== Does Voiceid work in real time? ==
   No, it doesn't work in real time.
-
-== 
+ 
