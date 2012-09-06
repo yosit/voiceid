@@ -34,3 +34,45 @@ Yes, there is a GUI interface named _voiceidplayer_ that shows all progress and 
 
 ==What kind of video file can be accepted in voiceidplayer gui?==
 The video formats accepted are those of [http://www.mplayerhq.hu/design7/info.html mplayer].
+
+==In which OS can run Voiceid?==
+Even if written in python, this project (still) does not works on Windows; this because we use a java library that has problems on Windows. It works well on Linux (tested on Ubuntu 12.04 and Debian 6.0).
+
+==I tried to run Voiceid on Ubuntu 12.04 but i can not produce the '. i.seg'. What is the problem?==
+This problem is relative to the sphinx_fe output (a .mfcc file), because the sphinxbase-tools package installable in ubuntu 12.04 (sphinxbase-utils 0.4.1-0ubuntu4 notice the trailing 4) doesn't work properly.
+You have to remove the package by apt-get and install an older package (sphinxbase-utils 0.4.1-0ubuntu1, trailing 1) that you can find here,
+https://launchpad.net/ubuntu/karmic/i386/sphinxbase-utils/0.4.1-0ubuntu1 (direct link to the deb http://launchpadlibrarian.net/30727966/sphinxbase-utils_0.4.1-0ubuntu1_i386.deb).
+
+==How can i use voiceid for the fastest gender detection only?==
+To do gender detection you have to write a python script. You have to
+use Voiceid in "single mode", passing a parameter single=True when you
+instantiate the Voiceid object. It assumes the wave has only one
+speaker.
+
+Here a little snippet of code to do that:
+{{{
+from voiceid.db import GMMVoiceDB
+from voiceid.sr import Voiceid
+import os
+v = Voiceid( GMMVoiceDB(os.path.expanduser("~/.voiceid/gmm_db")), "sample-8kHz.wav", single=True)
+v.extract_speakers()
+print v.get_clusters()['S0'].get_gender()  # when in single mode the cluster (only one in this mode) has label 'S0'
+}}}
+If you have more speakers you can use Voiceid as described in the wiki.
+
+You could also use the row `fm._gender_detection(filename)` function,
+but in this case it's up to you to convert the wave in input and to
+read from a .seg file the output.
+
+==Can I do some tweaking to the male and female thresholds?==
+
+To tune up the way gender is detected you have to look at
+fm._gender_detection(filename), where are called two routines of
+LIUM_SpkrDiarization that do that.
+The routines just compute, after a segmentation, a score by matching
+with a model of male and female voices (once installed the model file
+should be /usr/local/share/voiceid/gender.gmms).
+To tune the threshold you have to look at the LIUM implementation of
+MScore, otherwise you could build a new model for gender, but in this
+case I can't be very useful because we didn't do a new model but we
+use the one in the LIUM package.
