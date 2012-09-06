@@ -20,6 +20,12 @@ Voiceid is a library/system (written in Python) that identifies the various voic
 ==Why Python and not Java?==
 The core of Voiceid ([http://lium3.univ-lemans.fr/diarization/doku.php/welcome LIUM_SpkrDiarization] lib) is written in Java, and at the beginning Voiceid was a set of shell scripts running LIUM tasks. We switch to Python when it become more complex. We are planning to switch to Java in order to simplify the access to LIUM routines and for better performances.
 
+==How can I use it?==
+Voiceid is a library, so you can write python programs using it, just look at the [UsingLibrary wiki] and at the [API API]. You can also use some scripts that are included, in particular `vid`, that do all the recognition work.
+
+==Has Voiceid a GUI interface?==
+Yes, there is a GUI interface named `voiceidplayer` that allows to do all the things that can do `vid` and shows all elaboration progress and results in a simple window.
+
 ==What Voiceid takes in input?==
 Voiceid takes in input WAVE or video files that can be read by GStreamer. It convert the audio track with these specs "RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz".
 
@@ -28,9 +34,6 @@ The format of the output file can be: srt, json or [http://www.adobe.com/product
 
 ==Does Voiceid work in real time?==
 No, it doesn't work in real time.
-
-==Can Voiceid be used from a GUI interface?==
-Yes, there is a GUI interface named _voiceidplayer_ that shows all progress and results in a simple window.
 
 ==What kind of video file can be accepted in voiceidplayer gui?==
 The video formats accepted are those of [http://www.mplayerhq.hu/design7/info.html mplayer].
