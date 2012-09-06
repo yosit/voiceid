@@ -67,7 +67,7 @@ read from a .seg file the output.
 ==Can I do some tweaking to the male and female thresholds?==
 
 To tune up the way gender is detected you have to look at
-fm._gender_detection(filename), where are called two routines of
+`fm._gender_detection(filename)`, where are called two routines of
 LIUM_SpkrDiarization that do that.
 The routines just compute, after a segmentation, a score by matching
 with a model of male and female voices (once installed the model file
