@@ -307,7 +307,7 @@ _class _ `voiceid.sr.`*Voiceid*(_db_, _filename_, _single=False_)
 
 
 `voiceid.fm.`*ident_seg*(_filebasename_, _identifier_)
-    Substitute cluster names with speaker names ang generate a “<filebasename>.ident.seg” file.
+    Substitute cluster names with speaker names ang generate a "`<filebasename>.ident.seg`" file.
 `voiceid.fm.`*ident_seg_rename*(_filebasename_, _identifier_, _outputname_)
     Take a seg file and substitute the clusters with a given name or identifier.
 `voiceid.fm.`*merge_gmms*(_input_files_, _output_file_)
@@ -342,7 +342,7 @@ _class _ `voiceid.sr.`*Voiceid*(_db_, _filename_, _single=False_)
 
 
 `voiceid.fm.`*seg2trim*(_filebasename_)
-    Take a wave and splits it in small waves in this directory structure <file base name>/<cluster>/<cluster>_<start time>.wav
+    Take a wave and splits it in small waves in this directory structure `<file base name>/<cluster>/<cluster>_<start time>.wav`
         _filebasename_ (string) – filebasename of the seg and wav input files  
 
 
