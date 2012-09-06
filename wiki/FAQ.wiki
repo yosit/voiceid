@@ -2,9 +2,9 @@
 
 <wiki:toc max_depth="0" />
 
-= FAQ =
+=FAQ=
 
-== Differents among Speaker Recognition, Speech Recognition and so on? ==
+==Differents among Speaker Recognition, Speech Recognition and so on?==
 _Speaker diarization_: audio segmentation according to the different speaker's voices.
   
 _Gender recognition_: gender identification of a voice (male, female).
@@ -14,22 +14,22 @@ _Speaker recognition_:
     * speaker identification: name identification from a speakers database (who is speaking?)
 _Speech to text or speech recognition_: speech transcription 
 
-== What is Voiceid? ==
+==What is Voiceid?==
 Voiceid is a library/system (written in Python) that identifies the various voices within the video (diarization) and associate them a name if present in the database (identification), according to the gender.
 
-== Why Python and not Java?==
+==Why Python and not Java?==
 The core of Voiceid ([http://lium3.univ-lemans.fr/diarization/doku.php/welcome LIUM_SpkrDiarization] lib) is written in Java, and at the beginning Voiceid was a set of shell scripts running LIUM tasks. We switch to Python when it become more complex. We are planning to switch to Java in order to simplify the access to LIUM routines and for better performances.
 
-== What Voiceid takes in input? ==
+==What Voiceid takes in input?==
 Voiceid takes in input WAVE or video files that can be read by GStreamer. It convert the audio track with these specs "RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz".
 
-== What Voiceid return in output? ==
+==What Voiceid returns in output?==
 The format of the output file can be: srt, json or [http://www.adobe.com/products/xmp/ XMP]. Each of these contains the time intervals in which each speaker speaks into the video. Srt ([http://en.wikipedia.org/wiki/SubRip#SubRip_text_file_format SubRip]) is a file format used generally for the subtitles video.
 
-== Does Voiceid work in real time? ==
+==Does Voiceid work in real time?==
 No, it doesn't work in real time.
 
-== Can Voiceid be used from a GUI interface?=
+==Can Voiceid be used from a GUI interface?==
 Yes, there is a GUI interface named _voiceidplayer_ that shows all progress and results in a simple window.
 
 ==What kind of video file can be accepted in voiceidplayer gui?==
@@ -54,7 +54,7 @@ Here a little snippet of code to do that:
 from voiceid.db import GMMVoiceDB
 from voiceid.sr import Voiceid
 import os
-v = Voiceid( GMMVoiceDB(os.path.expanduser("~/.voiceid/gmm_db")), "sample-8kHz.wav", single=True)
+v = Voiceid(GMMVoiceDB(os.path.expanduser("~/.voiceid/gmm_db")), "sample-8kHz.wav", single=True)
 v.extract_speakers()
 print v.get_clusters()['S0'].get_gender()  # when in single mode the cluster (only one in this mode) has label 'S0'
 }}}
@@ -73,6 +73,5 @@ The routines just compute, after a segmentation, a score by matching
 with a model of male and female voices (once installed the model file
 should be /usr/local/share/voiceid/gender.gmms).
 To tune the threshold you have to look at the LIUM implementation of
-MScore, otherwise you could build a new model for gender, but in this
-case I can't be very useful because we didn't do a new model but we
+MScore, otherwise you could build a new model for gender, but we didn't do a new model, we
 use the one in the LIUM package.
