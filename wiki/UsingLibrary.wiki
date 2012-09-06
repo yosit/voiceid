@@ -1,37 +1,63 @@
 #summary How to use Voiceid in python scripts
 #labels Featured
 
-= Introduction =
+= Examples =
 
-Using the library in Python scripts:
+Using the library in Python scripts is very easy, generally you use two classes, `GMMVoiceDB`, the class that represents the voice database, and `Voiceid`, the class that do all the work with a single video/audio file.
+
+First of all you have to import the needed classes.
+
 {{{
 from voiceid.sr import Voiceid
 from voiceid.db import GMMVoiceDB
+}}}
 
-#
+Then you have to instantiate the voice database. To do that you have to call the constructor of `GMMVoiceDB` passing as parameter the directory where is the model db. It can be a new or old database, if the dir is empty will be created the db structure needed.
+
+{{{
 #   create voice db   
-#
 
 db = GMMVoiceDB('mydir')
+}}}
 
-#add models to db: params the basename of 'giov_wave.wav' and the speaker, Giovanni
+Now you can add all the voices you want to the database using the `add_model` method of the db.
+Usually the db has already some voice models added by the interactive mode of the `vid` script or with the gui `voiceidplayer`, which are a easy way to do that.
+
+{{{
+# add models to db: params the basename of 'giov_wave.wav' and the speaker, Giovanni
+
 db.add_model('giov_wave', 'Giovanni')
 db.add_model('fran_wave', 'Francesco')
 db.add_model('luca_wave', 'Luca')
 ...
+}}}
 
+When the db is ready, you can work on the file you want to process.
+To do that you have to call the `Voiceid` constructor with two parameters: the database instance and the path of the file to process.
 
-#
-#   extract speakers from a file 
-#
+{{{
 
-#process a video/audio file containing various speakers
+# process a video/audio file containing various speakers
+
 v = Voiceid(db, 'myfile.mp4')
+}}}
 
-#extract the speakers from file and search into db 
+Once loaded the file, you have to call the `extract_speakers` method of `Voiceid` to process the file.
+
+{{{
+# extract the speakers from file and search into db 
+
 v.extract_speakers()
 
-#print the clusters (one for every speaker) and relative speakers' names 
+}}}
+
+Now you should have all the extracted info into a list of clusters, which are objects of the class `Cluster` each representing a different Speaker. Each cluster has a list of `Segments` objects, which keep info about the speakers' voice in the audio track of the file.
+This simple prints show which voices were recognized by the system. 
+
+{{{
+
+# print the clusters (one for every speaker) and relative speakers' names 
+
 for c in v.get_clusters():
     cluster = v.get_cluster(c)
     print cluster
@@ -66,3 +92,5 @@ S5 (Francesco)
 00:03:51,600 to 00:03:53,660
 
 }}}
+
+This is basically what do the `vid` script. You can take a look at [http://code.google.com/p/voiceid/source/browse/trunk/scripts/vid it] if you want to know some more info for a simple usage. For advanced use you can take a look at the source of [http://code.google.com/p/voiceid/source/browse/trunk/scripts/voiceidplayer `voiceidplayer`].
