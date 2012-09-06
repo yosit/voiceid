@@ -21,7 +21,7 @@ Voiceid is a library/system (written in Python) that identifies the various voic
 The core of Voiceid ([http://lium3.univ-lemans.fr/diarization/doku.php/welcome LIUM_SpkrDiarization] lib) is written in Java, and at the beginning Voiceid was a set of shell scripts running LIUM tasks. We switch to Python when it become more complex. We are planning to switch to Java in order to simplify the access to LIUM routines and for better performances.
 
 ==How can I use it?==
-Voiceid is a library, so you can write python programs using it, just look at the [UsingLibrary wiki] and at the [API API]. You can also use some scripts that are included, in particular `vid`, that do all the recognition work.
+Voiceid is a library, so you can write python programs using it, just look at the [UsingLibrary wiki] and at the [API API](check if up to date). You can also use some scripts that are included, in particular `vid`, that do all the recognition work.
 
 ==Has Voiceid a GUI interface?==
 Yes, there is a GUI interface named `voiceidplayer` that allows to do all the things that can do `vid` and shows all elaboration progress and results in a simple window.
