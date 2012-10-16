@@ -15,4 +15,4 @@
   * Mplayer 0.6.9 (ex. [http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/smplayer-0.6.9-win32.exe/download smplayer-0.6.9-win32])
   * [http://pypi.python.org/packages/any/M/MplayerCtrl/MplayerCtrl-0.3.3.linux-i686.exe#md5=c5eafb16e5ab4c2517a9568e2bbd9fe4 MplayerCtrl-0.3.3]
 
-*All dependencies should be included in the system path (Simple [http://searchsystemschannel.techtarget.com/feature/Setting-Windows-7-environment-variables guide]).*
+*All dependencies should be [http://searchsystemschannel.techtarget.com/feature/Setting-Windows-7-environment-variables included] in the system path.*
