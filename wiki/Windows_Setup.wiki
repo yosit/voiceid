@@ -10,7 +10,7 @@
   * GStreamer (ex. [http://code.google.com/p/ossbuild/downloads/detail?name=GStreamer-WinBuilds-LGPL-x86-Beta04-0.10.7.msi&can=2&q= GStreamer-WinBuilds])
   * [http://www.videolan.org/vlc/ Vlc]
   
-  ==Dependencies for the GUI==
+  ==GUI dependencies ==
   * Wxpython 2.8.12 (ex. [http://sourceforge.net/projects/wxpython/files/wxPython/2.8.12.1/wxPython2.8-win32-unicode-2.8.12.1-py27.exe/download?use_mirror=garr wxPython2.8-win32-unicode-2.8.12.1-py27 ])
   * Mplayer 0.6.9 (ex. [http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/smplayer-0.6.9-win32.exe/download smplayer-0.6.9-win32])
   * [http://pypi.python.org/packages/any/M/MplayerCtrl/MplayerCtrl-0.3.3.linux-i686.exe#md5=c5eafb16e5ab4c2517a9568e2bbd9fe4 MplayerCtrl-0.3.3]
