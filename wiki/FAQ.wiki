@@ -40,7 +40,7 @@ No, it doesn't work in real time.
 The video formats accepted are those of [http://www.mplayerhq.hu/design7/info.html mplayer].
 
 ==In which OS can run Voiceid?==
-Even if written in python, this project (still) does not works on Windows; this because we use a java library that has problems on Windows. It works well on Linux (tested on Ubuntu 12.04 and Debian 6.0).
+It works well on Linux, Windows, Mac OS X (tested on Ubuntu 12.04, Debian 6.0, Windows7).
 
 ==I tried to run Voiceid on Ubuntu 12.04 but i can not produce the '. i.seg'. What is the problem?==
 This problem is relative to the sphinx_fe output (a .mfcc file), because the sphinxbase-tools package installable in ubuntu 12.04 (sphinxbase-utils 0.4.1-0ubuntu4 notice the trailing 4) doesn't work properly.
