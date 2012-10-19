@@ -17,3 +17,22 @@
   * [http://pypi.python.org/packages/any/M/MplayerCtrl/MplayerCtrl-0.3.3.linux-i686.exe#md5=c5eafb16e5ab4c2517a9568e2bbd9fe4 MplayerCtrl-0.3.3]
 
 *All dependencies should be [http://searchsystemschannel.techtarget.com/feature/Setting-Windows-7-environment-variables included] in the system path.*
+
+
+==Installation==
+
+Install the software dependencies above.
+
+Download the package (or checkout the source) and extract it. 
+
+Open the windows terminal *cmd* and go to the extracted dir (ex. `C:\Users\myuser> cd voiceid-0.1` ).
+
+Then just run 
+
+`C:\Users\myuser\voiceid-0.1> python setup.py install`
+
+From the same dir you should be able to run   
+
+`C:\Users\myuser\voiceid-0.1> python scripts/vim -h` 
+
+to ensure everything works well.
