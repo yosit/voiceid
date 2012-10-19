@@ -33,6 +33,6 @@ Then just run
 
 From the same dir you should be able to run   
 
-`C:\Users\myuser\voiceid-0.1> python scripts/vim -h` 
+`C:\Users\myuser\voiceid-0.1> python scripts/vid -h` 
 
 to ensure everything works well.
