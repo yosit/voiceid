@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Installation instructions for Windows.
 #labels Phase-Deploy,Featured
 
 = Installation instructions for Windows =
