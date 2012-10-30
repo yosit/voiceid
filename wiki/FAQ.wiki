@@ -79,3 +79,7 @@ should be /usr/local/share/voiceid/gender.gmms).
 To tune the threshold you have to look at the LIUM implementation of
 MScore, otherwise you could build a new model for gender, but we didn't make a new model, we
 use the one in the LIUM package.
+
+==How to clean the voice db and work with an empty voice db?==
+
+Just remove all files in `~/.voiceid/gmm_db/{F,M,U}` .
