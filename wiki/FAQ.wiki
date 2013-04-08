@@ -42,11 +42,11 @@ The video formats accepted are those of [http://www.mplayerhq.hu/design7/info.ht
 ==In which OS can run Voiceid?==
 It works well on Linux, Windows, Mac OS X (tested on Ubuntu 12.04, Debian 6.0, Windows7).
 
-==I tried to run Voiceid on Ubuntu 12.04 but i can not produce the '. i.seg'. What is the problem?==
+==I tried to run Voiceid on Ubuntu 12.04/12.10 but i can not produce the '. i.seg'. What is the problem?==
 This problem is relative to the sphinx_fe output (a .mfcc file), because the sphinxbase-tools package installable in ubuntu 12.04 (sphinxbase-utils 0.4.1-0ubuntu4 notice the trailing 4) doesn't work properly.
 You have to remove the package by apt-get and install an older package (sphinxbase-utils 0.4.1-0ubuntu1, trailing 1) that you can find here,
 https://launchpad.net/ubuntu/karmic/i386/sphinxbase-utils/0.4.1-0ubuntu1 (direct link to the deb http://launchpadlibrarian.net/30727966/sphinxbase-utils_0.4.1-0ubuntu1_i386.deb).
-Ensure you have still installed the right version by typing `dpkg -s sphinxbase-utils`.
+*Ensure you have installed the right version by typing `dpkg -s sphinxbase-utils`.*
 You must have a similar output:
  * Package: sphinxbase-utils
  * Status: install ok installed
