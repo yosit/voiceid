@@ -46,6 +46,19 @@ It works well on Linux, Windows, Mac OS X (tested on Ubuntu 12.04, Debian 6.0, W
 This problem is relative to the sphinx_fe output (a .mfcc file), because the sphinxbase-tools package installable in ubuntu 12.04 (sphinxbase-utils 0.4.1-0ubuntu4 notice the trailing 4) doesn't work properly.
 You have to remove the package by apt-get and install an older package (sphinxbase-utils 0.4.1-0ubuntu1, trailing 1) that you can find here,
 https://launchpad.net/ubuntu/karmic/i386/sphinxbase-utils/0.4.1-0ubuntu1 (direct link to the deb http://launchpadlibrarian.net/30727966/sphinxbase-utils_0.4.1-0ubuntu1_i386.deb).
+Ensure you have still installed the right version by typing `dpkg -s sphinxbase-utils`.
+You must have a similar output:
+ * Package: sphinxbase-utils
+ * Status: install ok installed
+ * Priority: optional
+ * Section: sound
+ * Installed-Size: 196
+ * Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
+ * Architecture: i386
+ * Source: sphinxbase
+ * Version: 0.4.1-0ubuntu1
+ * Depends: libasound2 (>> 1.0.18), libc6 (>= 2.7), libsphinxbase1 (>= 0.4.1), perl_
+
 
 ==How can i use voiceid for the fastest gender detection only?==
 To do gender detection you have to write a python script. You have to
