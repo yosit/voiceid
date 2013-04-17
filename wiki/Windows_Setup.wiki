@@ -1,4 +1,4 @@
-#summary Installation instructions for Windows.
+#summary Installation instructions for Windows v0.2.
 #labels Phase-Deploy,Featured
 
 = Installation instructions for Windows =
@@ -7,7 +7,6 @@
   * [http://www.python.org/getit/ Python 2.7]
   * Java 1.7
   * [http://sourceforge.net/projects/sox/files/latest/download?source=files Sox]
-  * CMU sphinx 0.4.1. You can use these [http://code.google.com/p/voiceid/downloads/detail?name=win_sphinx_binary_files.zip&can=2&q=binary binary] files (Microsoft Visual C++ 2005 Express Edition is required) and put them in enviroment variable.
   * GStreamer (ex. [http://code.google.com/p/ossbuild/downloads/detail?name=GStreamer-WinBuilds-LGPL-x86-Beta04-0.10.7.msi&can=2&q= GStreamer-WinBuilds])
   * [http://www.videolan.org/vlc/ Vlc]
   
