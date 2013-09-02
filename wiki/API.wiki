@@ -16,7 +16,7 @@ _class _ `voiceid.db.`*GMMVoiceDB*(_path_, _thrd_n=1_)
         *   *path* (`* _string_`) – the voice db path
 
 
-    ` ` *add_model*(_basefilename_, _identifier_, _gender=None_)
+    ` ` *add_model*(_basefilename_, _identifier_, _gender=None_, _score=None)
         Add a gmm model to db.
                 *   *basefilename* (_string_) – the wave file basename and path       
                 *   *identifier* (_string_) – the speaker in the wave                 
@@ -38,7 +38,7 @@ _class _ `voiceid.db.`*GMMVoiceDB*(_path_, _thrd_n=1_)
                 *   *identifier* (_string_) – the speaker in the wave                 
                 *   *score* (_float_) – the value of                                  
                 *   *gender* (_char F, M or U_) – the gender of the speaker (optional)
-
+                *   *score* (_float) – the score obtained in the voice matching(optional)
 
     ` ` *set_maxthreads*(_trd_)
         Set the max number of threads running together for the lookup task.
@@ -235,7 +235,7 @@ _class _ `voiceid.sr.`*Segment*(_line_)
                 *   *identifier* (`* _string_`) – the identifier of the speaker in the segment
 
 
-_class _ `voiceid.sr.`*Voiceid*(_vdb_, _filename_, _single=False_)
+_class _ `voiceid.sr.`*Voiceid*(_db_, _filename_, _single=False_)
     The main object that represents the file audio/video to manage.
         *   *db* (_object_) – the VoiceDB database instance                                                                                             
         *   *filename* (_string_) – the wave or video file to be processed                                                                              
@@ -260,12 +260,12 @@ _class _ `voiceid.sr.`*Voiceid*(_vdb_, _filename_, _single=False_)
                 *   *thrd_n* (_integer_) – max number of concurrent threads for voice db matches                                     
 
 
-    _static _ ` ` *from_dict*(_vdb_, _json_dict_)
+    _static _ ` ` *from_dict*(_db_, _json_dict_)
         Build a Voiceid object from json dictionary.
                 *   *json_dict* (`* _dictionary_`) – the json style python dictionary representing a Voiceid object instance
 
 
-    _static _ ` ` *from_json_file*(_vdb_, _json_filename_)
+    _static _ ` ` *from_json_file*(_db_, _json_filename_)
         Build a Voiceid object from json file.
                 *   *json_filename* (`* _string_`) – the file containing a json style python dictionary representing a Voiceid object instance
 
