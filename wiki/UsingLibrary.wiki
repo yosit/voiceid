@@ -65,7 +65,7 @@ for c in v.get_clusters():
     print
 
 
-#output
+# output
 
 S0 (Luca)
 00:00:42,980 to 00:00:49,140
@@ -93,4 +93,80 @@ S5 (Francesco)
 
 }}}
 
-This is basically what do the `vid` script. You can take a look at [http://code.google.com/p/voiceid/source/browse/trunk/scripts/vid it] if you want to know some more info for a simple usage. For advanced use you can take a look at the source of [http://code.google.com/p/voiceid/source/browse/trunk/scripts/voiceidplayer `voiceidplayer`].
+In case you have no models in the db or the voices are not recognized, you could have something like:
+
+{{{
+
+S51 (unknown)
+00:05:52,300 to 00:05:58,270
+
+S71 (unknown)
+00:07:51,800 to 00:08:07,210
+00:08:07,210 to 00:08:14,970
+00:08:18,110 to 00:08:29,500
+
+S65 (unknown)
+00:07:13,380 to 00:07:16,650
+00:07:27,800 to 00:07:32,270
+
+}}}
+
+If you want to listen to the audio, you can get the wave path of the entire cluster audio joined together by typing:
+
+
+{{{
+
+for c in v.get_clusters():
+    cluster = v.get_cluster(c)
+    print cluster
+    print cluster.wave
+    cluster.print_segments()
+    print
+
+# output
+
+S51 (unknown)
+/the/path/of/your/file/S51.wav
+00:05:52,300 to 00:05:58,270
+
+
+S71 (unknown)
+/the/path/of/your/file/S71.wav
+00:07:51,800 to 00:08:07,210
+00:08:07,210 to 00:08:14,970
+00:08:18,110 to 00:08:29,500
+
+
+S65 (unknown)
+/the/path/of/your/file/S65.wav
+00:07:13,380 to 00:07:16,650
+00:07:27,800 to 00:07:32,270
+
+}}}
+
+Then you can play the Wav using your favorite library, like GStreamer, and listen.
+When you know who is talking, you can set the name to the given cluster like that:
+
+{{{
+
+c = v.get_cluster('S51')
+c.set_speaker('Paolo')
+
+c = v.get_cluster('S71')
+c.set_speaker('Andrea')
+
+}}}
+
+`set_speaker` doesn't do all the work, you have to tell Voiceid you have finish the work and explicitly execute the `update_db` routine. It does all the modifications scheduled, most of it are new models creation, for db consistence.
+
+{{{
+v.update_db()
+}}}
+
+Now you should have two new models in the db for "Paolo" and "Andrea".
+If you run a new recognition on the same file the system should automatically recognize their voices.
+
+
+
+This is basically what do the `vid` script. You can take a look at [http://code.google.com/p/voiceid/source/browse/trunk/scripts/vid it] if you want to know some more info for a simple usage. 
+For advanced use you can take a look at the source of [http://code.google.com/p/voiceid/source/browse/trunk/scripts/voiceidplayer `voiceidplayer`].
