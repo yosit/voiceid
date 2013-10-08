@@ -32,6 +32,18 @@ db.add_model('luca_wave', 'Luca')
 ...
 }}}
 
+To check it the db actually has the models for the speakers you add, type:
+{{{
+print db.get_speakers()
+
+# output
+{'F': [],
+'M': ['Giovanni','Francesco','Luca'],
+'U': [] }
+
+}}}
+
+
 When the db is ready, you can work on the file you want to process.
 To do that you have to call the `Voiceid` constructor with two parameters: the database instance and the path of the file to process.
 
