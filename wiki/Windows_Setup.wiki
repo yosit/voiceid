@@ -30,6 +30,8 @@ Then just run
 
 `C:\Users\myuser\voiceid-0.1> python setup.py install`
 
+Add voiceid directory to pythonpath.
+
 From the same dir you should be able to run   
 
 `C:\Users\myuser\voiceid-0.1> python scripts/vid -h` 
