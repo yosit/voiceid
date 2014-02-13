@@ -96,3 +96,7 @@ use the one in the LIUM package.
 ==How to clean the voice db and work with an empty voice db?==
 
 Just remove all files in `~/.voiceid/gmm_db/{F,M,U}` .
+
+==What are the technical reasons Voiceid does not run in real-time? Is it conceivable that voiceid could run in real-time?==
+
+Voiceid does not work in real-time mainly because LIUM does not work in real-time (for what I know). The scripts onevoice and onevoiceidplayer simulate a real-time behavior by working on segments of time (while recording the next segment) but to achieve a good recognition you have to take at least 10 seconds of voice. Then you have to work on that data and if you have a fast processing hardware you could anyway check in a database of hundred of models (according to your goal), and this operation may take a lot of time.
